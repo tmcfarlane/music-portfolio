@@ -1,29 +1,15 @@
-import { ALIGN, StyledNavigationList, StyledNavigationItem, HeaderNavigation } from 'baseui/header-navigation';
-import { Button } from 'baseui/button';
+import NavBar from './components/navbar';
+import Landing from './components/landing';
+import { Block } from 'baseui/block';
 
 function App() { 
   return (
-    <>
-    
-    <HeaderNavigation>
-        <StyledNavigationList $align={ALIGN.left}>
-          <StyledNavigationItem>Dot's Music</StyledNavigationItem>
-        </StyledNavigationList>
-        <StyledNavigationList $align={ALIGN.center} />
-        <StyledNavigationList $align={ALIGN.right}>
-          <StyledNavigationItem>About</StyledNavigationItem>
-          <StyledNavigationItem>Shows</StyledNavigationItem>
-          <StyledNavigationItem>Videos</StyledNavigationItem>
-          <StyledNavigationItem>Blog</StyledNavigationItem>
-          <StyledNavigationItem>Book Me</StyledNavigationItem>
-        </StyledNavigationList>
-        </HeaderNavigation>
-      <div style={{ padding: '20px' }}>
-        <h1>Welcome to My Music World</h1>
-        <p>Explore my music, watch my performances, and see what's next!</p>
-        <Button>Watch My Latest Video</Button>
-      </div>
-    </>
+    <Block>
+      <NavBar />
+      <Block>
+        <Landing />
+      </Block>
+    </Block>
   );
 }
 
