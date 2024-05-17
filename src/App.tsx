@@ -1,15 +1,13 @@
-import NavBar from './components/navbar';
-import Landing from './components/landing';
-import { Block } from 'baseui/block';
+import NavBar from "./components/navbar";
+import Landing from "./components/landing";
+import "./App.css";
 
-function App() { 
+function App() {
   return (
-    <Block>
+    <>
       <NavBar />
-      <Block>
-        <Landing />
-      </Block>
-    </Block>
+      <Landing />
+    </>
   );
 }
 

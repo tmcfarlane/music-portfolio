@@ -1,6 +1,5 @@
 #root {
   width: 100%; /* Ensure it takes the full width on smaller screens */
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }

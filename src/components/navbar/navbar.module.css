@@ -1,0 +1,53 @@
+.navbarContainer {
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation {
+  display: flex;
+  justify-content: center; /* Center the navigation bar horizontally */
+  align-items: center;
+  padding: 1rem;
+  position: relative;
+}
+
+.navigationCenterList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigationItem {
+  margin: 0 1rem 0 1rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
+.buttonContainer {
+  position: absolute;
+  right: 1.5rem; /* Align the button to the right edge */
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
