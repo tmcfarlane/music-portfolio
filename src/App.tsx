@@ -1,12 +1,11 @@
-import NavBar from "./components/navbar";
-import Landing from "./components/landing";
-import "./App.css";
+import NavBar from "./components/navbar/navbar";
+import Home from "./pages/home/home";
 
 function App() {
   return (
     <>
       <NavBar />
-      <Landing />
+      <Home />
     </>
   );
 }
