@@ -1,4 +1,7 @@
 import styles from "./home.module.css";
+import { FaPlay } from "react-icons/fa";
+import { FaYoutube, FaTiktok } from "react-icons/fa";
+import { BsTwitterX } from "react-icons/bs";
 
 function Home() {
   return (
@@ -20,9 +23,25 @@ function Home() {
             Book Me
           </a>
           <a href="#" className={styles.btn}>
-            Watch Me
+            Watch Me <FaPlay className={styles["btn-icon"]} />
           </a>
         </div>
+      </div>
+
+      <div className={styles["home-img"]}>
+        <img src="me_fade.png" alt="music" />
+      </div>
+
+      <div className={styles["home-sci"]}>
+        <a href="#">
+          <FaYoutube />
+        </a>
+        <a href="#">
+          <FaTiktok />
+        </a>
+        <a href="#">
+          <BsTwitterX />
+        </a>
       </div>
     </section>
   );
