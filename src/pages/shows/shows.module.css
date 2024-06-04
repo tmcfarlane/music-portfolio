@@ -1,0 +1,36 @@
+.heading {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.shows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: auto;
+  padding-bottom: 5rem;
+}
+
+.shows .shows-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5rem;
+}
+
+.shows-row .shows-column {
+  flex: 1;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.shows-column .title {
+  font-size: 2.5rem;
+  margin: 0 0 1.5rem 0rem;
+  color: white;
+}
+
+.shows-column {
+  /* border-left: 0.2rem solid var(--clr-5); */
+}

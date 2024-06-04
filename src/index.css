@@ -27,3 +27,7 @@ section {
   min-width: 100vh;
   padding: 10rem 9% 2rem;
 }
+
+span {
+  color: var(--clr-5);
+}

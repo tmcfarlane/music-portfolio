@@ -102,9 +102,14 @@
   z-index: 1;
 }
 
+.btn-box.btns {
+  display: inline-block;
+  width: 15rem;
+}
+
 .home-sci {
   position: absolute;
-  bottom: 12rem;
+  bottom: 2rem;
   width: 170px;
   display: flex;
   justify-content: space-between;
