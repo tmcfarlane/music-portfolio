@@ -7,7 +7,6 @@ type FormValues = {
   fullName: string;
   email: string;
   phone: string;
-  eventDate?: string; // Optional field
   eventType?: string; // Optional field
   message: string;
 };
@@ -36,7 +35,18 @@ const Contact: React.FC = (): JSX.Element => {
             <input
               type="text"
               placeholder="Full Name"
+              required
               {...register("fullName", { required: true })}
+            />
+            <span className={styles["focus"]}></span>
+          </div>
+
+          <div className={styles["input-field"]}>
+            <input
+              type="email"
+              placeholder="Email Address"
+              required
+              {...register("email", { required: true })}
             />
             <span className={styles["focus"]}></span>
           </div>
@@ -47,40 +57,17 @@ const Contact: React.FC = (): JSX.Element => {
             <input
               type="tel"
               placeholder="Phone Number"
+              required
               {...register("phone", { required: true })}
             />
             <span className={styles["focus"]}></span>
           </div>
-        </div>
-
-        <div className={styles["input-box"]}>
-          <div className={styles["input-field"]}>
-            <input
-              type="email"
-              placeholder="Email"
-              {...register("email", { required: true })}
-            />
-            <span className={styles["focus"]}></span>
-          </div>
-        </div>
-
-        <div className={styles["input-box"]}>
           <div className={styles["input-field"]}>
             <input
               type="text"
               placeholder="Event Type"
+              required
               {...register("eventType")}
-            />
-            <span className={styles["focus"]}></span>
-          </div>
-        </div>
-
-        <div className={styles["input-box"]}>
-          <div className={styles["input-field"]}>
-            <input
-              type="date"
-              placeholder="Event Date"
-              {...register("eventDate")}
             />
             <span className={styles["focus"]}></span>
           </div>
@@ -91,6 +78,7 @@ const Contact: React.FC = (): JSX.Element => {
             placeholder="Message"
             cols={30}
             rows={10}
+            required
             {...register("message", { required: true })}
           />
           <span className={styles["focus"]}></span>
