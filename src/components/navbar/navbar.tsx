@@ -11,7 +11,7 @@ function Navbar(): JSX.Element {
 
   return (
     <header className={styles.header}>
-      <a href="#" className={styles.logo}>
+      <a href="#home" className={styles.logo}>
         TRENT
       </a>
 
@@ -25,7 +25,7 @@ function Navbar(): JSX.Element {
         <a href="#about">About</a>
         <a href="#shows">Upcoming Shows</a>
         <a href="#videos">Videos</a>
-        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <button className={styles.animatedButton}>Book Me</button>

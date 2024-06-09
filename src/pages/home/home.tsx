@@ -22,7 +22,7 @@ function Home() {
           <a href="#" className={styles.btn}>
             Book Me
           </a>
-          <a href="#" className={styles.btn}>
+          <a href="#videos" className={styles.btn}>
             Watch Me <FaPlay className={styles["btn-icon"]} />
           </a>
         </div>
