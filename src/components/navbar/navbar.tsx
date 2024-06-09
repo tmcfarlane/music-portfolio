@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./navbar.module.css";
 import { IoMenu, IoClose } from "react-icons/io5";
 
-function Navbar() {
+function Navbar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
