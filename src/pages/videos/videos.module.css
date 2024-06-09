@@ -1,0 +1,13 @@
+.videos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.heading {
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}

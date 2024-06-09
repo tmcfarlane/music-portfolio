@@ -1,0 +1,9 @@
+.video-container {
+  text-align: center;
+}
+
+.video-title {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: white;
+}

@@ -14,9 +14,7 @@ function About() {
       </div>
 
       <div className={styles["about-content"]}>
-        <h3>
-          Who I <span className={styles["musician"]}>Am</span>
-        </h3>
+        <h3>Who I Am</h3>
         <p>
           I'm a <span className={styles["musician"]}>Musician</span>. I am a new
           artist. I have done several open mic nights now and I’m looking to
