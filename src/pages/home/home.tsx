@@ -14,9 +14,10 @@ function Home() {
           <h3>I do music.</h3>
         </div>
         <p>
-          Lorem ipsum dolor sit amet. Est aliquam accusantium non voluptas
-          incidunt rem molestiae deleniti. Non quia eaque et quas amet ab cumque
-          molestiae est maxime debitis ut distinctio quam.
+          I create spontaneous musical adventures by combining guitar, vocals,
+          live looping, and a touch of humor. My goal is to inspire others to
+          find joy and authenticity in their passions, embracing imperfection
+          along the way.
         </p>
         <div className={styles["btn-box"]}>
           <a href="#" className={styles.btn}>

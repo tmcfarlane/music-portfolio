@@ -33,6 +33,7 @@
 .home-content p {
   font-size: 1.6rem;
   margin: 2rem 0 4rem;
+  max-width: 30rem;
 }
 
 .btn-box {
