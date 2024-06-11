@@ -16,7 +16,7 @@ const Showbox = ({
   time,
   link,
 }: ShowBoxProps): JSX.Element => (
-  <div className={styles["showbox"]}>
+  <div className={`${styles["showbox"]}`}>
     <div className={styles["showbox-content"]}>
       <div className={styles["content"]}>
         <div className={styles["date"]}>
@@ -28,7 +28,6 @@ const Showbox = ({
         {time && <p>{time}</p>}
         {link && <a href={link}>Link</a>}
         {/* Watch button */}
-        {/* Photo from event */}
       </div>
     </div>
   </div>

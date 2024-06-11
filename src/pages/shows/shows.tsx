@@ -17,8 +17,6 @@ function Shows(): JSX.Element {
             location="Location: Wm Grassie Wine Estates in Duvall, WA"
             time="Time: 6:30PM"
           />
-        </div>{" "}
-        <div className={styles["shows-column"]}>
           <h3 className={styles["title"]}>Past</h3>
           <Showbox
             date="Saturday, May 4th, 2024"

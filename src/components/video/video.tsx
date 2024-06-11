@@ -10,8 +10,8 @@ function Video({ title, url }: VideoProps): JSX.Element {
     <div className={styles["video-container"]}>
       <h3 className={styles["video-title"]}>{title}</h3>
       <iframe
-        width="560"
-        height="315"
+        width="800"
+        height="450"
         src={url}
         title={title}
         frameBorder="0"

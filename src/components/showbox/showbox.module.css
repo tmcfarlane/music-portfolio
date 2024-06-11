@@ -1,5 +1,6 @@
 .showbox {
   /* border-left: 0.2rem solid var(--clr-5); */
+  margin-bottom: 1em;
 }
 
 .showbox .showbox-content {

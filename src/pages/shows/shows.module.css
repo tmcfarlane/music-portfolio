@@ -34,3 +34,7 @@
 .shows-column {
   /* border-left: 0.2rem solid var(--clr-5); */
 }
+
+.title {
+  padding-top: 1rem;
+}
