@@ -1,23 +1,13 @@
 import { useState } from "react";
 import styles from "./navbar.module.css";
 import { IoMenu, IoClose } from "react-icons/io5";
+import { scrollIntoView, scrollToTop } from "../../utils/utils";
 
 function Navbar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const scrollIntoView = (id: string) => (event: React.MouseEvent) => {
-    event.preventDefault();
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToTop = (event: React.MouseEvent) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

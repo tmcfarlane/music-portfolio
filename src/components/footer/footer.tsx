@@ -1,12 +1,8 @@
 import { FaArrowUp } from "react-icons/fa6";
 import styles from "./footer.module.css";
+import { scrollToTop } from "../../utils/utils";
 
 function Footer(): JSX.Element {
-  const scrollToTop = (event: React.MouseEvent) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <footer className={styles["footer"]}>
       <div className={styles["footer-text"]}>
