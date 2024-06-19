@@ -9,9 +9,20 @@ function Navbar(): JSX.Element {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollIntoView = (id: string) => (event: React.MouseEvent) => {
+    event.preventDefault();
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToTop = (event: React.MouseEvent) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <header className={styles.header}>
-      <a href="#home" className={styles.logo}>
+      <a href="#home" className={styles.logo} onClick={scrollToTop}>
         TRENT
       </a>
 
@@ -22,13 +33,26 @@ function Navbar(): JSX.Element {
       <nav
         className={`${styles.navbar} ${isMenuOpen ? styles.navbarOpen : ""}`}
       >
-        <a href="#about">About</a>
-        <a href="#shows">Upcoming Shows</a>
-        <a href="#videos">Videos</a>
-        <a href="#contact">Contact</a>
+        <a href="#about" onClick={scrollIntoView("about")}>
+          About
+        </a>
+        <a href="#shows" onClick={scrollIntoView("shows")}>
+          Upcoming Shows
+        </a>
+        <a href="#videos" onClick={scrollIntoView("videos")}>
+          Videos
+        </a>
+        <a href="#contact" onClick={scrollIntoView("contact")}>
+          Contact
+        </a>
       </nav>
 
-      <button className={styles.animatedButton}>Book Me</button>
+      <button
+        className={styles["animatedButton"]}
+        onClick={scrollIntoView("contact")}
+      >
+        Book Me
+      </button>
     </header>
   );
 }

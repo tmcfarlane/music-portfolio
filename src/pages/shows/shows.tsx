@@ -11,12 +11,13 @@ function Shows(): JSX.Element {
       <div className={styles["shows-row"]}>
         <div className={styles["shows-column"]}>
           <h3 className={styles["title"]}>Future</h3>
-          <Showbox
+          <p className={styles["coming-soon"]}>More shows being added soon!</p>
+          {/* <Showbox
             date="June 14th, 2024"
             title="Open Mic Night"
             location="Location: Wm Grassie Wine Estates in Duvall, WA"
             time="Time: 6:30PM"
-          />
+          /> */}
           <h3 className={styles["title"]}>Past</h3>
           <Showbox
             date="Saturday, May 4th, 2024"
