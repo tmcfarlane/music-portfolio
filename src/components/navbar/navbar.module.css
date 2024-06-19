@@ -89,8 +89,8 @@
 .animatedButton::after {
   content: "";
   position: absolute;
-  inset: -2px;
-  z-index: -4;
+  inset: -1px;
+  z-index: -2;
   background: conic-gradient(
     from var(--gradient-angle),
     var(--clr-2),
@@ -105,7 +105,7 @@
 
 .animatedButton::after {
   filter: blur(0.6rem);
-  z-index: -4;
+  z-index: -1;
 }
 
 .animatedButton:hover {

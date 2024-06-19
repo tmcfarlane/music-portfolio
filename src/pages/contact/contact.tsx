@@ -1,22 +1,34 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./contact.module.css";
 import homestyles from "../home/home.module.css";
-
-type FormValues = {
-  fullName: string;
-  email: string;
-  phone: string;
-  eventType?: string; // Optional field
-  message: string;
-};
+import Swal from "sweetalert2";
 
 const Contact: React.FC = (): JSX.Element => {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    // Handle form submission
+    formData.append("access_key", "c9572ff1-2447-418a-8f67-8518ef4fd088");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    if (res.success) {
+      Swal.fire({
+        title: "Success!",
+        text: "Thank you for contacting me! I will get back to you soon.",
+        icon: "success",
+      });
+    }
   };
 
   return (
@@ -25,14 +37,14 @@ const Contact: React.FC = (): JSX.Element => {
         Contact <span>Me!</span>
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className={styles["input-box"]}>
           <div className={styles["input-field"]}>
             <input
               type="text"
               placeholder="Full Name"
               required
-              {...register("fullName", { required: true })}
+              name="fullName"
             />
             <span className={styles["focus"]}></span>
           </div>
@@ -42,7 +54,7 @@ const Contact: React.FC = (): JSX.Element => {
               type="email"
               placeholder="Email Address"
               required
-              {...register("email", { required: true })}
+              name="email"
             />
             <span className={styles["focus"]}></span>
           </div>
@@ -54,16 +66,16 @@ const Contact: React.FC = (): JSX.Element => {
               type="tel"
               placeholder="Phone Number"
               required
-              {...register("phone", { required: true })}
+              name="phone"
             />
             <span className={styles["focus"]}></span>
           </div>
           <div className={styles["input-field"]}>
             <input
               type="text"
-              placeholder="Event Type"
+              placeholder="Reason for Contacting"
               required
-              {...register("eventType")}
+              name="subject"
             />
             <span className={styles["focus"]}></span>
           </div>
@@ -75,7 +87,7 @@ const Contact: React.FC = (): JSX.Element => {
             cols={30}
             rows={10}
             required
-            {...register("message", { required: true })}
+            name="message"
           />
           <span className={styles["focus"]}></span>
         </div>
