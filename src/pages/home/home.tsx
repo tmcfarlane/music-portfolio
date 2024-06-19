@@ -2,7 +2,7 @@ import styles from "./home.module.css";
 import { FaPlay } from "react-icons/fa";
 import { FaYoutube, FaTiktok } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
-import { scrollIntoView, scrollToTop } from "../../utils/utils";
+import { scrollIntoView } from "../../utils/utils";
 
 function Home() {
   return (
