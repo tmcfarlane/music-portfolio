@@ -60,4 +60,8 @@
     margin: 1rem auto; /* Center the button horizontally */
     max-width: 80%; /* Ensure the button doesn't get too wide */
   }
+
+  .video-title {
+    font-size: 1.2rem;
+  }
 }

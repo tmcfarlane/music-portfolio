@@ -10,6 +10,11 @@ function Navbar(): JSX.Element {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollIntoViewCloseMenu = (id: string) => (event: React.MouseEvent) => {
+    scrollIntoView(id)(event);
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <a href="#home" className={styles.logo} onClick={scrollToTop}>
@@ -23,23 +28,25 @@ function Navbar(): JSX.Element {
       <nav
         className={`${styles.navbar} ${isMenuOpen ? styles.navbarOpen : ""}`}
       >
-        <a href="#about" onClick={scrollIntoView("about")}>
+        <a href="#about" onClick={scrollIntoViewCloseMenu("about")}>
           About
         </a>
-        <a href="#shows" onClick={scrollIntoView("shows")}>
+        <a href="#shows" onClick={scrollIntoViewCloseMenu("shows")}>
           Upcoming Shows
         </a>
-        <a href="#videos" onClick={scrollIntoView("videos")}>
+        <a href="#videos" onClick={scrollIntoViewCloseMenu("videos")}>
           Videos
         </a>
-        <a href="#contact" onClick={scrollIntoView("contact")}>
+        <a href="#contact" onClick={scrollIntoViewCloseMenu("contact")}>
           Contact
         </a>
       </nav>
 
       <button
         className={styles["animatedButton"]}
-        onClick={scrollIntoView("contact")}
+        onClick={() => {
+          scrollIntoView("contact");
+        }}
       >
         Book Me
       </button>

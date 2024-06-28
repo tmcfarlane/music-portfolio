@@ -32,8 +32,18 @@ body {
 
 section {
   padding: 4rem 9% 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 span {
   color: var(--clr-5);
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 2rem 5% 1rem; /* Reduced padding for mobile */
+  }
 }

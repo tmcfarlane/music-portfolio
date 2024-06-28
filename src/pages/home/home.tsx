@@ -39,9 +39,8 @@ function Home() {
         <div className={styles["social"]}>
           <Social />
         </div>
+        <div className={styles["home-img"]}></div>
       </div>
-
-      <div className={styles["home-img"]}></div>
     </section>
   );
 }

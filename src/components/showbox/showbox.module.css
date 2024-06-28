@@ -13,12 +13,10 @@
   border: 0.2rem solid var(--clr-5);
   border-radius: 0.6rem;
   margin-bottom: 0.5rem;
-  width: 30rem;
-  overflow: hidden;
-}
-
-.showbox-content * {
-  margin: 0rem;
+  max-width: 100%; /* Ensures it doesn't exceed the parent container */
+  width: auto; /* Adapts the width to the content up to max-width */
+  overflow: hidden; /* Keeps all content within the borders */
+  box-sizing: border-box; /* Includes padding and border in the width calculation */
 }
 
 .showbox-content .content .date {
