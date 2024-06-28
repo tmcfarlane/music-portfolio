@@ -1,5 +1,6 @@
 import styles from "./shows.module.css";
 import Showbox from "../../components/showbox/showbox";
+import Social from "../../components/social/social";
 
 function Shows(): JSX.Element {
   return (
@@ -11,7 +12,14 @@ function Shows(): JSX.Element {
       <div className={styles["shows-row"]}>
         <div className={styles["shows-column"]}>
           <h3 className={styles["title"]}>Future</h3>
-          <p className={styles["coming-soon"]}>More shows being added soon!</p>
+          <p className={styles["coming-soon"]}>
+            More shows coming soon! <br />
+            Follow me to stay updated!
+          </p>
+
+          <div className={styles["social"]}>
+            <Social />
+          </div>
           {/* <Showbox
             date="June 14th, 2024"
             title="Open Mic Night"

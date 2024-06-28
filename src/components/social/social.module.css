@@ -1,0 +1,44 @@
+.home-sci {
+  position: relative;
+  width: 170px;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.home-sci a {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0.2rem solid var(--clr-5);
+  border-radius: 50%;
+  color: var(--clr-5);
+  font-size: 20px;
+  z-index: 1;
+  overflow: hidden;
+  transition: 0.5s;
+  color: white;
+}
+
+.home-sci a:hover {
+  color: black;
+}
+
+.home-sci a:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--clr-5);
+  z-index: -1;
+  transition: 0.5s;
+}
+
+.home-sci a:hover::before {
+  width: 100%;
+}

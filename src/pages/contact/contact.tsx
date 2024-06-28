@@ -8,7 +8,7 @@ const Contact: React.FC = (): JSX.Element => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    formData.append("access_key", "c9572ff1-2447-418a-8f67-8518ef4fd088");
+    formData.append("access_key", "2c8cac5f-9a30-44df-bddd-5c318eb237bc");
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);

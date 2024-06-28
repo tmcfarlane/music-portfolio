@@ -45,10 +45,13 @@
   text-align: center;
   background: linear-gradient(
     45deg,
+    var(--clr-1),
+    var(--clr-2),
     var(--clr-5),
     var(--clr-6),
     var(--clr-5),
-    var(--clr-6)
+    var(--clr-2),
+    var(--clr-1)
   );
   background-size: 400%;
   background-clip: transparent;
@@ -67,4 +70,11 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }

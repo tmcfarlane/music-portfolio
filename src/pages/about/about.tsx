@@ -1,5 +1,5 @@
 import styles from "./about.module.css";
-import homestyles from "../home/home.module.css";
+// import homestyles from "../home/home.module.css";
 
 function About() {
   return (
@@ -40,11 +40,11 @@ function About() {
           to discover their own joy and authenticity in whatever they love, and
           to be unapologetically themselves.
         </p>
-        <div className={`${homestyles["btn-box"]} ${homestyles["btns"]}`}>
+        {/* <div className={`${homestyles["btn-box"]} ${homestyles["btns"]}`}>
           <a href="#" className={homestyles["btn"]}>
             Read More
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

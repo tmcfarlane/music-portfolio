@@ -3,7 +3,65 @@
 }
 
 .video-title {
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
   color: white;
+  font-size: 2.3rem;
+  width: 80%;
+}
+
+.video-container iframe {
+  filter: hue-rotate(90deg);
+}
+
+/* Added wrapper for responsive iframe */
+.iframe-wrapper {
+}
+
+.responsive-iframe {
+  width: 850px;
+  height: 478px;
+}
+
+.iframe-link {
+  display: none;
+}
+
+.video-text {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+}
+
+.play-button {
+  margin-left: auto;
+  margin-right: 10px;
+  font-size: 24px;
+  color: white;
+  width: 24px; /* Explicit width */
+  height: 24px; /* Explicit height */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+}
+
+@media (max-width: 850px) {
+  .responsive-iframe {
+    width: 400px;
+    height: 225px;
+  }
+}
+
+@media (max-width: 520px) {
+  .responsive-iframe {
+    display: none;
+  }
+
+  .iframe-link {
+    display: block;
+    text-decoration: none;
+    padding: 1rem; /* Added padding for better touch target */
+    background-color: transparent; /* Button-like background */
+    border-radius: 5px; /* Rounded corners for button feel */
+    border: 2px solid var(--clr-5); /* Border to enhance button look */
+    font-size: 1.2rem; /* Larger text for visibility */
+    text-align: center; /* Center text inside the link */
+    margin: 1rem auto; /* Center the button horizontally */
+    max-width: 80%; /* Ensure the button doesn't get too wide */
+  }
 }

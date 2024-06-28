@@ -11,3 +11,24 @@
   text-align: center;
   margin-bottom: 1rem;
 }
+
+.subheading {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--clr-6);
+  background: linear-gradient(
+    45deg,
+    var(--clr-5),
+    var(--clr-6),
+    var(--clr-5),
+    var(--clr-6)
+  );
+  background-clip: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+@media (max-width: 520px) {
+}

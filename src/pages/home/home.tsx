@@ -1,8 +1,7 @@
 import styles from "./home.module.css";
 import { FaPlay } from "react-icons/fa";
-import { FaYoutube, FaTiktok } from "react-icons/fa";
-import { BsTwitterX } from "react-icons/bs";
 import { scrollIntoView } from "../../utils/utils";
+import Social from "../../components/social/social";
 
 function Home() {
   return (
@@ -37,25 +36,12 @@ function Home() {
             Watch Me <FaPlay className={styles["btn-icon"]} />
           </a>
         </div>
-        <div className={styles["home-sci"]}>
-          <a
-            href="https://www.youtube.com/channel/UCGZGKDnmdsfb3-h1Q0iq0LA/"
-            target="blank"
-          >
-            <FaYoutube />
-          </a>
-          <a href="#">
-            <FaTiktok />
-          </a>
-          <a href="#">
-            <BsTwitterX />
-          </a>
+        <div className={styles["social"]}>
+          <Social />
         </div>
       </div>
 
-      <div className={styles["home-img"]}>
-        <img src="me_fade.png" alt="music" />
-      </div>
+      <div className={styles["home-img"]}></div>
     </section>
   );
 }
