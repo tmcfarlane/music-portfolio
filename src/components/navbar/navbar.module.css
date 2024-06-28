@@ -8,8 +8,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  padding: 20px 100px;
+  width: 95%;
+  padding: 20px 100px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -133,7 +133,7 @@
   }
 }
 
-@media (max-width: 790px) {
+@media (max-width: 825px) {
   .icons {
     display: inline-flex;
   }
@@ -165,20 +165,14 @@
     display: block;
     text-align: center;
     margin: 1.5rem 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     transition: 0.3s ease;
   }
 
   .animatedButton {
     position: absolute;
-    top: 0;
+    top: 5%;
     right: 5%;
     margin: 1.5rem 4.5rem;
-  }
-}
-
-@media (max-width: 520px) {
-  html {
-    font-size: 50%;
   }
 }
