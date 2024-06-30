@@ -51,17 +51,32 @@
   .iframe-link {
     display: block;
     text-decoration: none;
-    padding: 1rem; /* Added padding for better touch target */
-    background-color: transparent; /* Button-like background */
-    border-radius: 5px; /* Rounded corners for button feel */
-    border: 2px solid var(--clr-5); /* Border to enhance button look */
-    font-size: 1.2rem; /* Larger text for visibility */
-    text-align: center; /* Center text inside the link */
+    padding: 0.6rem;
+    background-color: transparent;
+    border: 0.2rem solid var(--clr-5);
+    border-radius: 0.6rem;
+    text-align: left;
     margin: 1rem auto; /* Center the button horizontally */
-    max-width: 80%; /* Ensure the button doesn't get too wide */
+    position: relative;
+    max-width: 24rem;
+  }
+
+  .iframe-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: rgba(161, 3, 182, 0.8);
+    z-index: -1;
+  }
+
+  .iframe-link:hover::before {
+    width: 100%;
   }
 
   .video-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
