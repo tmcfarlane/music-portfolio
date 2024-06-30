@@ -9,7 +9,6 @@
 .heading {
   font-size: 5rem;
   text-align: center;
-  margin-bottom: 1rem;
 }
 
 .subheading {
@@ -30,5 +29,8 @@
   -webkit-background-clip: text;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 630px) {
+  .heading {
+    font-size: 3rem;
+  }
 }

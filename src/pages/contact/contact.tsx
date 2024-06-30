@@ -94,7 +94,7 @@ const Contact: React.FC = (): JSX.Element => {
 
         <div className={`${homestyles["btn-box"]} ${homestyles["btns"]}`}>
           <button type="submit" className={homestyles["btn"]}>
-            Submit
+            Send
           </button>
         </div>
       </form>
