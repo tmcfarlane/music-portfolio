@@ -44,9 +44,7 @@ function Navbar(): JSX.Element {
 
       <button
         className={styles["animatedButton"]}
-        onClick={() => {
-          scrollIntoView("contact");
-        }}
+        onClick={scrollIntoViewCloseMenu("contact")}
       >
         Book Me
       </button>
