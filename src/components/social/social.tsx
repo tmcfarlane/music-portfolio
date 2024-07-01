@@ -24,7 +24,7 @@ function Social(): JSX.Element {
             toast.error("TikTok will be added soon.");
           }}
         >
-          <FaTiktok />
+          <FaTiktok className={styles["tiktok"]} />
         </a>
         <a
           href="#"

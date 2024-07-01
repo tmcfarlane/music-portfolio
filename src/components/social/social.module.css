@@ -32,7 +32,15 @@
 }
 
 .home-sci a:nth-child(2):hover {
-  color: #ff0050;
+  color: black;
+}
+
+.home-sci a:hover .tiktok {
+  filter: drop-shadow(2px 0px 0px #ff0050) drop-shadow(-2px -2px 0px #4de8f4);
+}
+
+.tiktok {
+  line-height: 0.5;
 }
 
 .home-sci a:before {
