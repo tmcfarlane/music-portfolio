@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./contact.module.css";
-import homestyles from "../home/home.module.css";
 import Swal from "sweetalert2";
 
 const Contact: React.FC = (): JSX.Element => {
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
 
     formData.append("access_key", "2c8cac5f-9a30-44df-bddd-5c318eb237bc");
 
@@ -28,6 +28,7 @@ const Contact: React.FC = (): JSX.Element => {
         text: "Thank you for contacting me! I will get back to you soon.",
         icon: "success",
       });
+      form.reset();
     }
   };
 
