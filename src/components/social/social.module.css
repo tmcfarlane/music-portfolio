@@ -1,6 +1,6 @@
 .home-sci {
   position: relative;
-  width: 170px;
+  width: 250px;
   display: inline-flex;
   justify-content: space-between;
 }
@@ -10,13 +10,13 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   background: transparent;
   border: 0.2rem solid var(--clr-5);
   border-radius: 50%;
   color: var(--clr-5);
-  font-size: 20px;
+  font-size: 30px;
   z-index: 1;
   overflow: hidden;
   transition: 0.5s;
@@ -25,6 +25,14 @@
 
 .home-sci a:hover {
   color: black;
+}
+
+.home-sci a:nth-child(1):hover {
+  color: red;
+}
+
+.home-sci a:nth-child(2):hover {
+  color: #ff0050;
 }
 
 .home-sci a:before {
