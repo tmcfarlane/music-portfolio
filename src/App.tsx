@@ -5,6 +5,7 @@ import Shows from "./pages/shows/shows";
 import Videos from "./pages/videos/videos";
 import Contact from "./pages/contact/contact";
 import Footer from "./components/footer/footer";
+import MusicPlayer from "./pages/tracks/musicplayer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Shows />
       <Videos />
       <Contact />
+      <MusicPlayer />
       <Footer />
     </>
   );
