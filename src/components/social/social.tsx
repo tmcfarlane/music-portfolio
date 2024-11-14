@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 function Social(): JSX.Element {
   return (
     <>
-      <div></div>
       <div className={styles["home-sci"]}>
         <a
           href="https://www.youtube.com/channel/UCGZGKDnmdsfb3-h1Q0iq0LA/"

@@ -46,6 +46,15 @@ export default function MusicPlayer() {
     audioRef.current.volume = volume;
   }, [volume]);
 
+  // Add this useEffect to prevent body scrolling when tracklist is visible
+  useEffect(() => {
+    if (isTrackListVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isTrackListVisible]);
+
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -84,8 +93,10 @@ export default function MusicPlayer() {
     <>
       <div
         className={`fixed top-0 left-0 right-0 bg-gray-900 transition-all duration-300 ease-in-out ${
-          isTrackListVisible ? "h-[calc(100%-90px)]" : "h-0"
-        } overflow-hidden`}
+          isTrackListVisible
+            ? "h-[calc(100%-90px)] overflow-y-auto"
+            : "h-0 overflow-hidden"
+        }`}
       >
         <TrackList
           currentTrack={currentTrack}

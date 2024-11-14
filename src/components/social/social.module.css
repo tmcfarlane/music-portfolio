@@ -15,16 +15,31 @@
   background: transparent;
   border: 0.2rem solid var(--clr-5);
   border-radius: 50%;
-  color: var(--clr-5);
   font-size: 30px;
-  z-index: 1;
+  z-index: 0; /* Ensure the link content (icons) is above the :before pseudo-element */
   overflow: hidden;
   transition: 0.5s;
-  color: white;
+  color: white; /* Default color */
+}
+
+.home-sci a:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--clr-5);
+  transition: 0.5s;
+  z-index: -1; /* Keep it below the icon and border */
+}
+
+.home-sci a:hover::before {
+  width: 100%; /* Expands background effect on hover */
 }
 
 .home-sci a:hover {
-  color: black;
+  color: black; /* Changes icon color on hover */
 }
 
 .home-sci a:nth-child(1):hover {
@@ -41,20 +56,5 @@
 
 .tiktok {
   line-height: 0.5;
-}
-
-.home-sci a:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 100%;
-  background: var(--clr-5);
-  z-index: -1;
-  transition: 0.5s;
-}
-
-.home-sci a:hover::before {
-  width: 100%;
+  z-index: 2; /* Ensure TikTok icon is above the :before background */
 }

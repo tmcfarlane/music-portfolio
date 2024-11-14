@@ -21,7 +21,7 @@ export default function TrackList({
   };
 
   return (
-    <div className="w-full bg-gray-900 text-white">
+    <div className="w-full bg-gray-900 text-white pt-[60px] relative z-50 h-full overflow-y-auto">
       <div className="px-8 py-6">
         {/* Headers */}
         <div className="grid grid-cols-[auto_1fr_1fr_1fr_auto] gap-4 px-4 py-2 text-sm text-gray-400 border-b border-gray-700">
