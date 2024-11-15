@@ -1,4 +1,6 @@
 .footer {
+  position: relative; /* Ensure it's part of the normal flow */
+  margin-bottom: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;

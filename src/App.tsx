@@ -16,8 +16,8 @@ function App() {
       <Shows />
       <Videos />
       <Contact />
-      <MusicPlayer />
       <Footer />
+      <MusicPlayer />
     </>
   );
 }
