@@ -21,7 +21,7 @@ export const tracks = [
     },
     {
       id: 3,
-      title: "Looper Alone Freestyle (The name is so long you really don't want to read it all)",
+      title: "Looper Alone Freestyle",
       artist: "Trent",
       album: "Logic Box",
       artwork: "/assets/album/logic_box.png?height=40&width=40",
