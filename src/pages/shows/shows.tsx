@@ -19,6 +19,11 @@ function Shows(): JSX.Element {
       </div>
       <h3 className={styles["title"]}>Past</h3>
       <Showbox
+        date="Friday, October 11th, 2024"
+        title="Open Mic Night"
+        location="Location: Wm Grassie Wine Estates in Duvall, WA"
+      />
+      <Showbox
         date="Saturday, May 4th, 2024"
         title="Open Mic Night"
         location="Location: SoulFood CoffeeHouse in Redmond, WA"

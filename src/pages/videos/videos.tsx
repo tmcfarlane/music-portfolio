@@ -4,6 +4,18 @@ import styles from "./videos.module.css";
 function Videos(): JSX.Element {
   const videoList = [
     {
+      title: "Win for the Day - Trent      ",
+      url: "https://www.youtube.com/embed/_HT9qKWnIWU?si=Vy3KvqYjSBQK3qme",
+    },
+    {
+      title: "A Magical Sunset and Rare Quadruple Rainbow 🌈✨",
+      url: "https://www.youtube.com/embed/CyUo35CvLGU?si=eMelkwy65zViT3g3",
+    },
+    {
+      title: "Open Mic - Wm Grassie Wine Estates ROUND 2",
+      url: "https://www.youtube.com/embed/EPAifaA_M-w?si=zUSTvJP6339W9WOz",
+    },
+    {
       title: "Open Mic - Soulfood Coffeehouse WITH KIDS",
       url: "https://www.youtube.com/embed/LZCyjJaMyZM?si=4vS050CT3uC22ILW",
     },

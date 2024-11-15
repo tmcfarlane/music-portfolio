@@ -17,8 +17,17 @@ import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 import { tracks } from "./tracklist";
 import TrackList from "./tracklistcomp";
 
-export default function MusicPlayer() {
+interface MusicPlayerProps {
+  isTrackListVisible: boolean;
+  toggleTrackList: () => void;
+}
+
+export default function MusicPlayer({
+  isTrackListVisible,
+  toggleTrackList,
+}: MusicPlayerProps) {
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -26,7 +35,6 @@ export default function MusicPlayer() {
   const [isMuted, setIsMuted] = useState(false); // Track mute state
   const previousVolume = useRef(volume); // Store previous volume before muting
 
-  const [isTrackListVisible, setIsTrackListVisible] = useState(false);
   const audioRef = useRef(new Audio(currentTrack.url));
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isShuffleActive, setIsShuffleActive] = useState(false);
@@ -37,15 +45,18 @@ export default function MusicPlayer() {
       audioRef.current.pause();
     }
 
+    // Start loading animation
+    setCurrentTime(0);
+    setDuration(0);
+    setIsLoading(true);
+
     const newAudio = new Audio(currentTrack.url);
     newAudio.volume = volume;
     audioRef.current = newAudio;
 
-    setCurrentTime(0);
-    setDuration(0);
-
     const setAudioDuration = () => {
       setDuration(newAudio.duration);
+      setIsLoading(false); // Stop loading animation when metadata is loaded
     };
     newAudio.addEventListener("loadedmetadata", setAudioDuration);
 
@@ -70,7 +81,7 @@ export default function MusicPlayer() {
     newAudio.addEventListener("ended", handleSongEnd);
 
     if (!isFirstRender) {
-      newAudio.play();
+      newAudio.play().catch(() => setIsLoading(false)); // Ensure loading stops if play fails
       setIsPlaying(true);
     } else {
       setIsPlaying(false);
@@ -106,6 +117,20 @@ export default function MusicPlayer() {
   }, [isPlaying]);
 
   useEffect(() => {
+    const handleLoadStart = () => setIsLoading(true);
+    const handleCanPlay = () => setIsLoading(false);
+
+    const currentAudio = audioRef.current;
+    currentAudio.addEventListener("loadstart", handleLoadStart);
+    currentAudio.addEventListener("canplay", handleCanPlay);
+
+    return () => {
+      currentAudio.removeEventListener("loadstart", handleLoadStart);
+      currentAudio.removeEventListener("canplay", handleCanPlay);
+    };
+  }, []);
+
+  useEffect(() => {
     if (isTrackListVisible) {
       document.body.style.overflow = "hidden";
     } else {
@@ -116,10 +141,21 @@ export default function MusicPlayer() {
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
+      setIsLoading(false); // Explicitly stop loading
     } else {
-      audioRef.current.play();
+      setIsLoading(true); // Start loading animation
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true); // Set playing state when playback starts
+          setIsLoading(false); // Stop loading animation
+        })
+        .catch((error) => {
+          console.error("Playback error:", error);
+          setIsLoading(false); // Ensure loading stops if play fails
+        });
     }
-    setIsPlaying(!isPlaying);
   };
 
   const playNext = () => {
@@ -261,19 +297,22 @@ export default function MusicPlayer() {
               >
                 <SkipBack className="h-5 w-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full bg-cyan-400 text-gray-900 hover:bg-cyan-300 h-9 w-9"
-                onClick={togglePlay}
-                aria-label={isPlaying ? "Pause" : "Play"}
-              >
-                {isPlaying ? (
-                  <PauseIcon className="text-black" />
-                ) : (
-                  <PlayIcon className="text-black" />
-                )}
-              </Button>
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full bg-cyan-400 text-gray-900 hover:bg-cyan-300 h-9 w-9"
+                  onClick={togglePlay}
+                  aria-label={isPlaying ? "Pause" : "Play"}
+                >
+                  {isPlaying ? (
+                    <PauseIcon className="text-black" />
+                  ) : (
+                    <PlayIcon className="text-black" />
+                  )}
+                </Button>
+                {isLoading && <div className="spinner"></div>}
+              </div>
               <Button
                 variant="ghost"
                 size="icon"
@@ -323,7 +362,7 @@ export default function MusicPlayer() {
 
           {/* Volume and TrackList Controls */}
           <div className="flex items-center justify-between w-full md:w-auto lg:min-w-[200px]">
-            <div className="flex items-center md:mr-8 p-2">
+            <div className="md:flex hidden items-center md:mr-8 p-2">
               <button
                 onClick={() => setIsMuted(!isMuted)}
                 className="flex items-center"
@@ -356,8 +395,8 @@ export default function MusicPlayer() {
             <Button
               variant="outline"
               size="sm"
-              className="text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
-              onClick={() => setIsTrackListVisible(!isTrackListVisible)}
+              className="ml-auto text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
+              onClick={toggleTrackList}
               aria-label={
                 isTrackListVisible ? "Hide track list" : "Show track list"
               }
