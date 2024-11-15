@@ -7,7 +7,7 @@ export const tracks = [
       artwork: "/assets/album/fl_studio_box.png?height=40&width=40",
       duration: 150,
       dateAdded: "9 hours ago",
-      url: "/assets/tracks/1.wav",
+      url: "/assets/tracks/1.mp3",
     },
     {
       id: 2,
@@ -17,7 +17,7 @@ export const tracks = [
       artwork: "/assets/album/fl_studio_box.png?height=40&width=40",
       duration: 163,
       dateAdded: "3 days ago",
-      url: "/assets/tracks/lofi_good_start.wav",
+      url: "/assets/tracks/lofi_good_start.mp3",
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ export const tracks = [
       artwork: "/assets/album/ableton_live_box.png?height=40&width=40",
       duration: 81,
       dateAdded: "4 days ago",
-      url: "/assets/tracks/try_it.wav",
+      url: "/assets/tracks/try_it.mp3",
     },
     {
       id: 5,
@@ -47,7 +47,7 @@ export const tracks = [
       artwork: "/assets/album/loop_station_box.png?height=40&width=40",
       duration: 274,
       dateAdded: "4 days ago",
-      url: "/assets/tracks/do_or_die.wav",
+      url: "/assets/tracks/do_or_die.mp3",
     },
 
   ];
