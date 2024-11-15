@@ -31,7 +31,7 @@ export const tracks = [
     },
     {
       id: 4,
-      title: "Move",
+      title: "Move Around",
       artist: "Trent",
       album: "Ableton Live Box",
       artwork: "/assets/album/ableton_live_box.png?height=40&width=40",

@@ -191,7 +191,7 @@ export default function MusicPlayer() {
             <div className="flex flex-col w-[calc(100%-50px)] md:w-[180px] lg:max-w-[200px] overflow-hidden justify-between">
               <div className="relative">
                 <span
-                  className="text-xs sm:text-sm font-medium text-white whitespace-nowrap inline-block animate-scroll"
+                  className="text-sm sm:text-base font-medium text-white whitespace-nowrap inline-block animate-scroll"
                   style={{
                     animation:
                       currentTrack.title.length > 20
@@ -205,7 +205,7 @@ export default function MusicPlayer() {
               </div>
               <div className="relative">
                 <span
-                  className="text-xs text-gray-300 whitespace-nowrap inline-block animate-scroll"
+                  className="text-sm sm:text-sm text-gray-300 whitespace-nowrap inline-block animate-scroll"
                   style={{
                     animation:
                       currentTrack.artist.length > 20

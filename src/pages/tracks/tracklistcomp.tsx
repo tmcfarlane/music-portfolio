@@ -22,13 +22,13 @@ export default function TrackList({
 
   return (
     <div className="w-full bg-gray-900 text-white pt-[60px] relative z-50 h-full overflow-y-auto">
-      <div className="px-8 py-6">
+      <div className="px-4 sm:px-8 py-6">
         {/* Headers */}
-        <div className="grid grid-cols-[auto_1fr_1fr_1fr_auto] gap-4 px-4 py-2 text-sm text-gray-400 border-b border-gray-700">
+        <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1fr_1fr_1fr_auto] gap-4 px-4 py-2 text-sm text-gray-400 border-b border-gray-700">
           <div className="w-8 text-right">#</div>
           <div>Title</div>
-          <div>Album</div>
-          <div>Date added</div>
+          <div className="hidden sm:block">Album</div>
+          <div className="hidden sm:block">Date added</div>
           <div className="flex justify-end">
             <Clock className="h-4 w-4" />
           </div>
@@ -40,7 +40,7 @@ export default function TrackList({
             <div
               key={track.id}
               className={cn(
-                "grid grid-cols-[auto_1fr_1fr_1fr_auto] gap-4 px-4 py-2 rounded-md group hover:bg-gray-800 cursor-pointer",
+                "grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1fr_1fr_1fr_auto] gap-4 px-4 py-2 rounded-md group hover:bg-gray-800 cursor-pointer",
                 currentTrack?.id === track.id && "bg-gray-700"
               )}
               onMouseEnter={() => setHoveredTrackId(track.id)}
@@ -84,10 +84,10 @@ export default function TrackList({
                   <span className="text-sm text-gray-400">{track.artist}</span>
                 </div>
               </div>
-              <div className="flex items-center text-sm text-gray-300">
+              <div className="hidden sm:flex items-center text-sm text-gray-300">
                 {track.album}
               </div>
-              <div className="flex items-center text-sm text-gray-400">
+              <div className="hidden sm:flex items-center text-sm text-gray-400">
                 {track.dateAdded}
               </div>
               <div className="flex items-center justify-end text-sm text-gray-300 w-[48px]">
