@@ -17,7 +17,15 @@ import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 import { tracks } from "./tracklist";
 import TrackList from "./tracklistcomp";
 
-export default function MusicPlayer() {
+interface MusicPlayerProps {
+  isTrackListVisible: boolean;
+  toggleTrackList: () => void;
+}
+
+export default function MusicPlayer({
+  isTrackListVisible,
+  toggleTrackList,
+}: MusicPlayerProps) {
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -27,7 +35,6 @@ export default function MusicPlayer() {
   const [isMuted, setIsMuted] = useState(false); // Track mute state
   const previousVolume = useRef(volume); // Store previous volume before muting
 
-  const [isTrackListVisible, setIsTrackListVisible] = useState(false);
   const audioRef = useRef(new Audio(currentTrack.url));
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isShuffleActive, setIsShuffleActive] = useState(false);
@@ -389,7 +396,7 @@ export default function MusicPlayer() {
               variant="outline"
               size="sm"
               className="ml-auto text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
-              onClick={() => setIsTrackListVisible(!isTrackListVisible)}
+              onClick={toggleTrackList}
               aria-label={
                 isTrackListVisible ? "Hide track list" : "Show track list"
               }
