@@ -12,59 +12,71 @@ import {
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
-
 import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
-import TrackList from "./tracklistcomp";
 import { tracks } from "./tracklist";
+import TrackList from "./tracklistcomp";
 
 export default function MusicPlayer() {
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0); // Initialize duration state
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isTrackListVisible, setIsTrackListVisible] = useState(false);
   const audioRef = useRef(new Audio(currentTrack.url));
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isShuffleActive, setIsShuffleActive] = useState(false);
+  const [isRepeatActive, setIsRepeatActive] = useState(false);
 
   useEffect(() => {
-    // Clean up the previous audio instance
     if (audioRef.current) {
       audioRef.current.pause();
     }
 
-    // Create a new Audio instance
     const newAudio = new Audio(currentTrack.url);
     newAudio.volume = volume;
     audioRef.current = newAudio;
 
-    // Reset currentTime and duration
     setCurrentTime(0);
-    setDuration(0); // Reset duration when track changes
+    setDuration(0);
 
-    // Update duration when metadata is loaded
     const setAudioDuration = () => {
       setDuration(newAudio.duration);
     };
     newAudio.addEventListener("loadedmetadata", setAudioDuration);
 
-    // Attach the timeupdate event listener
     const updateTime = () => setCurrentTime(newAudio.currentTime);
     newAudio.addEventListener("timeupdate", updateTime);
 
-    // Play the new audio only if it's not the first render
+    // Handle song end logic
+    const handleSongEnd = () => {
+      if (isShuffleActive) {
+        // Shuffle and repeat: Play a random track repeatedly
+        const randomIndex = Math.floor(Math.random() * tracks.length);
+        setCurrentTrack(tracks[randomIndex]);
+      } else if (isRepeatActive && !isShuffleActive) {
+        // Repeat without shuffle: Play the same track again
+        newAudio.currentTime = 0;
+        newAudio.play();
+      } else {
+        // Default: Stop playback
+        setIsPlaying(false);
+      }
+    };
+    newAudio.addEventListener("ended", handleSongEnd);
+
     if (!isFirstRender) {
       newAudio.play();
       setIsPlaying(true);
     } else {
-      setIsPlaying(false); // Ensure `isPlaying` is false on first render
-      setIsFirstRender(false); // Mark that the first render has passed
+      setIsPlaying(false);
+      setIsFirstRender(false);
     }
 
-    // Clean up event listeners when the track changes or component unmounts
     return () => {
       newAudio.removeEventListener("timeupdate", updateTime);
       newAudio.removeEventListener("loadedmetadata", setAudioDuration);
+      newAudio.removeEventListener("ended", handleSongEnd);
     };
   }, [currentTrack]);
 
@@ -80,7 +92,6 @@ export default function MusicPlayer() {
     }
   }, [isPlaying]);
 
-  // Add this useEffect to prevent body scrolling when tracklist is visible
   useEffect(() => {
     if (isTrackListVisible) {
       document.body.style.overflow = "hidden";
@@ -99,12 +110,28 @@ export default function MusicPlayer() {
   };
 
   const playNext = () => {
-    const currentIndex = tracks.findIndex(
-      (track) => track.id === currentTrack.id
-    );
-    const nextTrack = tracks[(currentIndex + 1) % tracks.length];
-    setCurrentTrack(nextTrack);
-    setIsPlaying(true);
+    if (isRepeatActive && isShuffleActive) {
+      // Shuffle and repeat: Play a random track
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      setCurrentTrack(tracks[randomIndex]);
+    } else if (isRepeatActive) {
+      // Repeat without shuffle: Play the same track again
+      audioRef.current.currentTime = 0;
+      setIsPlaying(true);
+    } else if (isShuffleActive) {
+      // Shuffle without repeat: Play a random track
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      setCurrentTrack(tracks[randomIndex]);
+      setIsPlaying(true);
+    } else {
+      // Default: Play the next track in order
+      const currentIndex = tracks.findIndex(
+        (track) => track.id === currentTrack.id
+      );
+      const nextTrack = tracks[(currentIndex + 1) % tracks.length];
+      setCurrentTrack(nextTrack);
+      setIsPlaying(true);
+    }
   };
 
   const playPrevious = () => {
@@ -133,25 +160,25 @@ export default function MusicPlayer() {
         }`}
       >
         <TrackList
-          currentTrack={currentTrack}
           onTrackSelect={setCurrentTrack}
+          currentTrack={currentTrack}
         />
       </div>
       <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 backdrop-blur-lg z-50">
-        <div className="flex items-center justify-between px-4 h-[90px]">
+        <div className="flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-2 sm:py-0 h-auto sm:h-[90px] gap-2 sm:gap-4">
           {/* Track Info */}
-          <div className="flex items-center gap-4 min-w-[300px]">
+          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto sm:min-w-[150px] md:min-w-[300px]">
             {currentTrack && (
               <img
                 src={currentTrack.artwork}
                 alt={`${currentTrack.title} artwork`}
-                className="w-14 h-14 rounded-md object-cover"
+                className="w-10 h-10 sm:w-14 sm:h-14 rounded-md object-cover"
               />
             )}
-            <div className="flex flex-col w-[180px] overflow-hidden relative">
+            <div className="flex flex-col w-[calc(100%-50px)] sm:w-[120px] md:w-[180px] overflow-hidden">
               <div className="relative">
                 <span
-                  className="text-sm font-medium text-white whitespace-nowrap inline-block animate-scroll"
+                  className="text-xs sm:text-sm font-medium text-white whitespace-nowrap inline-block animate-scroll"
                   style={{
                     animation:
                       currentTrack.title.length > 20
@@ -179,7 +206,7 @@ export default function MusicPlayer() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex sm:hidden items-center gap-2 ml-auto">
               <Button
                 variant="ghost"
                 size="icon"
@@ -199,13 +226,16 @@ export default function MusicPlayer() {
           </div>
 
           {/* Playback Controls */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 w-[700px] px-4">
-            <div className="flex items-center gap-6">
+          <div className="flex-1 flex flex-col items-center gap-2 px-2 sm:px-4 w-full sm:w-auto sm:max-w-[700px]">
+            <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 w-full">
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-purple-400 hover:text-purple-300 hover:bg-gray-800"
+                className={`hover:bg-gray-800 hover:${
+                  isShuffleActive ? "text-cyan-400" : "text-purple-400"
+                } ${isShuffleActive ? "text-purple-400" : "text-cyan-400"}`}
                 aria-label="Shuffle"
+                onClick={() => setIsShuffleActive(!isShuffleActive)}
               >
                 <Shuffle className="h-5 w-5" />
               </Button>
@@ -243,14 +273,17 @@ export default function MusicPlayer() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-purple-400 hover:text-purple-300 hover:bg-gray-800"
+                className={`hover:bg-gray-800 hover:${
+                  isRepeatActive ? "text-cyan-400" : "text-purple-400"
+                } ${isRepeatActive ? "text-purple-400" : "text-cyan-400"}`}
                 aria-label="Repeat"
+                onClick={() => setIsRepeatActive(!isRepeatActive)}
               >
                 <Repeat className="h-5 w-5" />
               </Button>
             </div>
             <div className="flex items-center gap-2 w-full">
-              <span className="text-xs text-gray-300 w-10 text-right">
+              <span className="text-xs text-gray-300 w-8 sm:w-10 text-right">
                 {formatTime(currentTime)}
               </span>
               <Slider.Root
@@ -267,32 +300,33 @@ export default function MusicPlayer() {
                 <Slider.Track className="bg-gray-600 relative flex-1 h-1 rounded">
                   <Slider.Range className="absolute bg-cyan-500 h-full rounded" />
                 </Slider.Track>
-                <Slider.Thumb className="block w-4 h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
+                <Slider.Thumb className="block w-3 h-3 sm:w-4 sm:h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
               </Slider.Root>
-              <span className="text-xs text-gray-300 w-10">
+              <span className="text-xs text-gray-300 w-8 sm:w-10">
                 {formatTime(duration)}
               </span>
             </div>
           </div>
 
           {/* Additional Controls */}
-          <div className="flex items-center min-w-[180px] justify-end">
-            <div className="flex items-center mr-10">
-              <Volume2 className="h-5 w-5 text-cyan-400" />
+          <div className="flex items-center justify-end w-full sm:w-auto sm:min-w-[100px] md:min-w-[180px] mt-2 sm:mt-0">
+            <div className="flex items-center mr-4">
+              <Volume2 className="h-4 w-4 md:h-5 md:w-5 text-cyan-400" />
               <Slider.Root
                 value={[volume * 100]}
                 max={100}
                 step={1}
                 onValueChange={(value) => setVolume(value[0] / 100)}
-                className="w-[100px] h-5 flex items-center relative"
+                className="w-full max-w-[150px] min-w-[100px] h-5 flex items-center relative"
                 aria-label="Volume"
               >
                 <Slider.Track className="bg-gray-600 relative grow h-1 rounded">
                   <Slider.Range className="absolute bg-cyan-500 h-full rounded" />
                 </Slider.Track>
-                <Slider.Thumb className="block w-4 h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
+                <Slider.Thumb className="block w-3 h-3 sm:w-4 sm:h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
               </Slider.Root>
             </div>
+
             <Button
               variant="outline"
               size="sm"
@@ -302,12 +336,14 @@ export default function MusicPlayer() {
                 isTrackListVisible ? "Hide track list" : "Show track list"
               }
             >
-              <ListMusic className="h-4 w-4 mr-2" />
-              {isTrackListVisible ? "Hide Tracks" : "Show Tracks"}
+              <ListMusic className="h-4 w-4 mr-0 sm:mr-2" />
+              <span className="hidden sm:inline">
+                {isTrackListVisible ? "Hide Tracks" : "Show Tracks"}
+              </span>
               {isTrackListVisible ? (
-                <ChevronDown className="h-4 w-4 ml-2" />
+                <ChevronDown className="h-4 w-4 ml-0 sm:ml-2" />
               ) : (
-                <ChevronUp className="h-4 w-4 ml-2" />
+                <ChevronUp className="h-4 w-4 ml-0 sm:ml-2" />
               )}
             </Button>
           </div>
