@@ -1,50 +1,84 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
+import * as Slider from "@radix-ui/react-slider";
 import {
   Heart,
-  Play,
-  Pause,
   SkipBack,
   SkipForward,
   Volume2,
-  Maximize2,
-  Minimize2,
   ListMusic,
   Shuffle,
   Repeat,
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
+
+import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 import TrackList from "./tracklistcomp";
-import { tracks } from "./trackslist";
+import { tracks } from "./tracklist";
 
 export default function MusicPlayer() {
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0); // Initialize duration state
   const [volume, setVolume] = useState(1);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [isTrackListVisible, setIsTrackListVisible] = useState(false);
   const audioRef = useRef(new Audio(currentTrack.url));
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
-    audioRef.current.src = currentTrack.url;
-    if (isPlaying) {
-      audioRef.current.play();
+    // Clean up the previous audio instance
+    if (audioRef.current) {
+      audioRef.current.pause();
     }
-  }, [currentTrack]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    audio.addEventListener("timeupdate", updateTime);
-    return () => audio.removeEventListener("timeupdate", updateTime);
-  }, []);
+    // Create a new Audio instance
+    const newAudio = new Audio(currentTrack.url);
+    newAudio.volume = volume;
+    audioRef.current = newAudio;
+
+    // Reset currentTime and duration
+    setCurrentTime(0);
+    setDuration(0); // Reset duration when track changes
+
+    // Update duration when metadata is loaded
+    const setAudioDuration = () => {
+      setDuration(newAudio.duration);
+    };
+    newAudio.addEventListener("loadedmetadata", setAudioDuration);
+
+    // Attach the timeupdate event listener
+    const updateTime = () => setCurrentTime(newAudio.currentTime);
+    newAudio.addEventListener("timeupdate", updateTime);
+
+    // Play the new audio only if it's not the first render
+    if (!isFirstRender) {
+      newAudio.play();
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false); // Ensure `isPlaying` is false on first render
+      setIsFirstRender(false); // Mark that the first render has passed
+    }
+
+    // Clean up event listeners when the track changes or component unmounts
+    return () => {
+      newAudio.removeEventListener("timeupdate", updateTime);
+      newAudio.removeEventListener("loadedmetadata", setAudioDuration);
+    };
+  }, [currentTrack]);
 
   useEffect(() => {
     audioRef.current.volume = volume;
   }, [volume]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   // Add this useEffect to prevent body scrolling when tracklist is visible
   useEffect(() => {
@@ -106,7 +140,7 @@ export default function MusicPlayer() {
       <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 backdrop-blur-lg z-50">
         <div className="flex items-center justify-between px-4 h-[90px]">
           {/* Track Info */}
-          <div className="flex items-center gap-4 min-w-[180px]">
+          <div className="flex items-center gap-4 min-w-[300px]">
             {currentTrack && (
               <img
                 src={currentTrack.artwork}
@@ -114,14 +148,37 @@ export default function MusicPlayer() {
                 className="w-14 h-14 rounded-md object-cover"
               />
             )}
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-white">
-                {currentTrack.title}
-              </span>
-              <span className="text-xs text-gray-300">
-                {currentTrack.artist}
-              </span>
+            <div className="flex flex-col w-[180px] overflow-hidden relative">
+              <div className="relative">
+                <span
+                  className="text-sm font-medium text-white whitespace-nowrap inline-block animate-scroll"
+                  style={{
+                    animation:
+                      currentTrack.title.length > 20
+                        ? "scrollText 20s linear infinite"
+                        : "none",
+                    display: "inline-block",
+                  }}
+                >
+                  {currentTrack.title}
+                </span>
+              </div>
+              <div className="relative">
+                <span
+                  className="text-xs text-gray-300 whitespace-nowrap inline-block animate-scroll"
+                  style={{
+                    animation:
+                      currentTrack.artist.length > 20
+                        ? "scrollText 20s linear infinite"
+                        : "none",
+                    display: "inline-block",
+                  }}
+                >
+                  {currentTrack.artist}
+                </span>
+              </div>
             </div>
+
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
@@ -142,7 +199,7 @@ export default function MusicPlayer() {
           </div>
 
           {/* Playback Controls */}
-          <div className="flex flex-col items-center gap-2 max-w-2xl flex-1 px-4">
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 w-[700px] px-4">
             <div className="flex items-center gap-6">
               <Button
                 variant="ghost"
@@ -164,14 +221,14 @@ export default function MusicPlayer() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full bg-cyan-400 text-gray-900 hover:bg-cyan-300 h-8 w-8"
+                className="rounded-full bg-cyan-400 text-gray-900 hover:bg-cyan-300 h-9 w-9"
                 onClick={togglePlay}
                 aria-label={isPlaying ? "Pause" : "Play"}
               >
                 {isPlaying ? (
-                  <Pause className="h-5 w-5" />
+                  <PauseIcon className="text-black" />
                 ) : (
-                  <Play className="h-5 w-5" />
+                  <PlayIcon className="text-black" />
                 )}
               </Button>
               <Button
@@ -196,25 +253,46 @@ export default function MusicPlayer() {
               <span className="text-xs text-gray-300 w-10 text-right">
                 {formatTime(currentTime)}
               </span>
-              <Slider
+              <Slider.Root
                 value={[currentTime]}
-                max={currentTrack.duration || 0}
+                max={duration || 0}
                 step={1}
-                className="w-full"
                 onValueChange={(value) => {
                   audioRef.current.currentTime = value[0];
                   setCurrentTime(value[0]);
                 }}
+                className="w-full relative flex items-center h-5"
                 aria-label="Seek"
-              />
+              >
+                <Slider.Track className="bg-gray-600 relative flex-1 h-1 rounded">
+                  <Slider.Range className="absolute bg-cyan-500 h-full rounded" />
+                </Slider.Track>
+                <Slider.Thumb className="block w-4 h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
+              </Slider.Root>
               <span className="text-xs text-gray-300 w-10">
-                {formatTime(currentTrack.duration || 0)}
+                {formatTime(duration)}
               </span>
             </div>
           </div>
 
           {/* Additional Controls */}
-          <div className="flex items-center gap-2 min-w-[180px] justify-end">
+          <div className="flex items-center min-w-[180px] justify-end">
+            <div className="flex items-center mr-10">
+              <Volume2 className="h-5 w-5 text-cyan-400" />
+              <Slider.Root
+                value={[volume * 100]}
+                max={100}
+                step={1}
+                onValueChange={(value) => setVolume(value[0] / 100)}
+                className="w-[100px] h-5 flex items-center relative"
+                aria-label="Volume"
+              >
+                <Slider.Track className="bg-gray-600 relative grow h-1 rounded">
+                  <Slider.Range className="absolute bg-cyan-500 h-full rounded" />
+                </Slider.Track>
+                <Slider.Thumb className="block w-4 h-4 bg-cyan-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" />
+              </Slider.Root>
+            </div>
             <Button
               variant="outline"
               size="sm"
@@ -230,30 +308,6 @@ export default function MusicPlayer() {
                 <ChevronDown className="h-4 w-4 ml-2" />
               ) : (
                 <ChevronUp className="h-4 w-4 ml-2" />
-              )}
-            </Button>
-            <div className="flex items-center gap-2">
-              <Volume2 className="h-5 w-5 text-cyan-400" />
-              <Slider
-                value={[volume * 100]}
-                max={100}
-                step={1}
-                className="w-[100px]"
-                onValueChange={(value) => setVolume(value[0] / 100)}
-                aria-label="Volume"
-              />
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-cyan-400 hover:text-cyan-300 hover:bg-gray-800"
-              onClick={() => setIsFullscreen(!isFullscreen)}
-              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-            >
-              {isFullscreen ? (
-                <Minimize2 className="h-5 w-5" />
-              ) : (
-                <Maximize2 className="h-5 w-5" />
               )}
             </Button>
           </div>

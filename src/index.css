@@ -57,3 +57,22 @@ span {
     --radius: 0.5rem;
   }
 }
+
+@keyframes scrollText {
+  0%,
+  10% {
+    transform: translateX(0); /* Pause at start */
+  }
+  50%,
+  95% {
+    transform: translateX(calc(-100% + 180px)); /* Scroll fully */
+  }
+  100% {
+    transform: translateX(0); /* Reset to start */
+  }
+}
+
+.animate-scroll {
+  animation-timing-function: ease-in-out; /* Smooth start and end */
+  animation-delay: 2s;
+}

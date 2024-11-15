@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Clock, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { tracks } from "./trackslist";
+import { tracks } from "./tracklist";
 
 interface TrackListProps {
   currentTrack: (typeof tracks)[0] | null;
@@ -90,7 +90,7 @@ export default function TrackList({
               <div className="flex items-center text-sm text-gray-400">
                 {track.dateAdded}
               </div>
-              <div className="flex items-center justify-end text-sm text-gray-300">
+              <div className="flex items-center justify-end text-sm text-gray-300 w-[48px]">
                 {formatTime(track.duration)}
               </div>
             </div>
