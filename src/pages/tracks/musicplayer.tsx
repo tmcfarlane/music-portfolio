@@ -355,7 +355,7 @@ export default function MusicPlayer() {
 
           {/* Volume and TrackList Controls */}
           <div className="flex items-center justify-between w-full md:w-auto lg:min-w-[200px]">
-            <div className="flex items-center md:mr-8 p-2">
+            <div className="md:flex hidden items-center md:mr-8 p-2">
               <button
                 onClick={() => setIsMuted(!isMuted)}
                 className="flex items-center"
@@ -388,7 +388,7 @@ export default function MusicPlayer() {
             <Button
               variant="outline"
               size="sm"
-              className="text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
+              className="ml-auto text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
               onClick={() => setIsTrackListVisible(!isTrackListVisible)}
               aria-label={
                 isTrackListVisible ? "Hide track list" : "Show track list"
