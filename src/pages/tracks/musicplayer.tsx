@@ -11,6 +11,7 @@ import {
   Repeat,
   ChevronUp,
   ChevronDown,
+  VolumeX,
 } from "lucide-react";
 import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 import { tracks } from "./tracklist";
@@ -22,6 +23,9 @@ export default function MusicPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false); // Track mute state
+  const previousVolume = useRef(volume); // Store previous volume before muting
+
   const [isTrackListVisible, setIsTrackListVisible] = useState(false);
   const audioRef = useRef(new Audio(currentTrack.url));
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -83,6 +87,15 @@ export default function MusicPlayer() {
   useEffect(() => {
     audioRef.current.volume = volume;
   }, [volume]);
+
+  useEffect(() => {
+    if (isMuted) {
+      previousVolume.current = volume; // Save the current volume before muting
+      setVolume(0); // Set volume to 0
+    } else {
+      setVolume(previousVolume.current); // Restore the previous volume
+    }
+  }, [isMuted]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -165,17 +178,17 @@ export default function MusicPlayer() {
         />
       </div>
       <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 backdrop-blur-lg z-50">
-        <div className="flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-2 sm:py-0 h-auto sm:h-[90px] gap-2 sm:gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between px-2 md:px-6 py-2 md:py-0 h-auto md:h-[90px] gap-2 md:gap-4">
           {/* Track Info */}
-          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto sm:min-w-[150px] md:min-w-[300px]">
+          <div className="flex items-center w-full lg:w-auto lg:min-w-[150px] xl:min-w-[300px]">
             {currentTrack && (
               <img
                 src={currentTrack.artwork}
                 alt={`${currentTrack.title} artwork`}
-                className="w-10 h-10 sm:w-14 sm:h-14 rounded-md object-cover"
+                className="w-10 h-10 sm:w-14 sm:h-14 rounded-md object-cover mr-2"
               />
             )}
-            <div className="flex flex-col w-[calc(100%-50px)] sm:w-[120px] md:w-[180px] overflow-hidden">
+            <div className="flex flex-col w-[calc(100%-50px)] md:w-[180px] lg:max-w-[200px] overflow-hidden justify-between">
               <div className="relative">
                 <span
                   className="text-xs sm:text-sm font-medium text-white whitespace-nowrap inline-block animate-scroll"
@@ -206,7 +219,7 @@ export default function MusicPlayer() {
               </div>
             </div>
 
-            <div className="flex sm:hidden items-center gap-2 ml-auto">
+            <div className="flex items-center justify-center gap-1 p-1">
               <Button
                 variant="ghost"
                 size="icon"
@@ -226,7 +239,7 @@ export default function MusicPlayer() {
           </div>
 
           {/* Playback Controls */}
-          <div className="flex-1 flex flex-col items-center gap-2 px-2 sm:px-4 w-full sm:w-auto sm:max-w-[700px]">
+          <div className="flex-1 flex flex-col items-center gap-2 px-2 md:px-4 w-full md:w-auto md:max-w-[700px]">
             <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 w-full">
               <Button
                 variant="ghost"
@@ -308,15 +321,28 @@ export default function MusicPlayer() {
             </div>
           </div>
 
-          {/* Additional Controls */}
-          <div className="flex items-center justify-end w-full sm:w-auto sm:min-w-[100px] md:min-w-[180px] mt-2 sm:mt-0">
-            <div className="flex items-center mr-4">
-              <Volume2 className="h-4 w-4 md:h-5 md:w-5 text-cyan-400" />
+          {/* Volume and TrackList Controls */}
+          <div className="flex items-center justify-between w-full md:w-auto lg:min-w-[200px]">
+            <div className="flex items-center md:mr-8 p-2">
+              <button
+                onClick={() => setIsMuted(!isMuted)}
+                className="flex items-center"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? (
+                  <VolumeX className="h-4 w-4 md:h-5 md:w-5 text-cyan-400 mr-2" />
+                ) : (
+                  <Volume2 className="h-4 w-4 md:h-5 md:w-5 text-cyan-400 mr-2" />
+                )}
+              </button>
               <Slider.Root
                 value={[volume * 100]}
                 max={100}
                 step={1}
-                onValueChange={(value) => setVolume(value[0] / 100)}
+                onValueChange={(value) => {
+                  setVolume(value[0] / 100);
+                  if (value[0] / 100 > 0) setIsMuted(false); // Unmute if slider is moved up
+                }}
                 className="w-full max-w-[150px] min-w-[100px] h-5 flex items-center relative"
                 aria-label="Volume"
               >
@@ -330,16 +356,14 @@ export default function MusicPlayer() {
             <Button
               variant="outline"
               size="sm"
-              className="text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200"
+              className="text-cyan-300 border-cyan-300 bg-gray-800 hover:text-cyan-200 hover:border-cyan-200 hover:bg-gray-700 transition-colors duration-200 mr-1"
               onClick={() => setIsTrackListVisible(!isTrackListVisible)}
               aria-label={
                 isTrackListVisible ? "Hide track list" : "Show track list"
               }
             >
               <ListMusic className="h-4 w-4 mr-0 sm:mr-2" />
-              <span className="hidden sm:inline">
-                {isTrackListVisible ? "Hide Tracks" : "Show Tracks"}
-              </span>
+              <span>{isTrackListVisible ? "Hide Tracks" : "Show Tracks"}</span>
               {isTrackListVisible ? (
                 <ChevronDown className="h-4 w-4 ml-0 sm:ml-2" />
               ) : (
