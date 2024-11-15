@@ -55,4 +55,8 @@
   .footer-text {
     font-size: 1.2rem;
   }
+
+  .footer {
+    margin-bottom: 180px; /* Provide additional space for the footer */
+  }
 }
